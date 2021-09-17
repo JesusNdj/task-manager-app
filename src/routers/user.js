@@ -71,7 +71,7 @@ router.patch("/users/me", auth, async (req, res) => {
   );
 
   if (!isValidOperation) {
-    return res.status(404).send({ error: "Invalid updates" });
+    return res.status(400).send({ error: "Invalid updates" });
   }
   try {
     updates.forEach((update) => (req.user[update] = req.body[update]));
@@ -146,7 +146,7 @@ router.delete("/users/me", auth, async (req, res) => {
     sendCancelationEmail(req.user.email, req.user.name);
     res.send(req.user); // status 204
   } catch (error) {
-    res.status(400).send(error);
+    res.status(401).send(error);
   }
 });
 
